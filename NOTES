@@ -1,0 +1,122 @@
+
+
+### 📚 **Plan pour réaliser le projet Push_Swap avec l'algorithme Radix**
+
+L'objectif est de trier une pile de nombres avec un ensemble limité d'instructions, en optimisant les opérations pour respecter les exigences du sujet.
+
+---
+
+## **1. Comprendre les bases du tri Radix**
+
+- **Concept :** L'algorithme Radix trie les nombres en les classant chiffre par chiffre, en partant du bit le moins significatif (LSB - Least Significant Bit) jusqu'au plus significatif (MSB - Most Significant Bit).
+- **Approche :**
+   - Chaque nombre est représenté en binaire.
+   - On utilise les bits pour déterminer s'ils doivent être poussés dans la pile B (`pb`) ou rester dans la pile A (`ra`).
+
+---
+
+## **2. Structure du projet**
+
+### **2.1 Parsing et gestion des erreurs**
+- Vérifier :
+   - Si les arguments sont des entiers valides.
+   - Absence de doublons.
+   - Détection des erreurs d'entrée (ex : caractères non numériques).
+
+**Fichiers :** `parsing.c`
+
+### **2.2 Initialisation des piles**
+- Créer deux piles (`a` et `b`) avec des listes chaînées.
+- Remplir la pile A avec les arguments.
+
+**Fichiers :** `init_stacks.c`
+
+---
+
+## **3. Implémentation des instructions**
+
+### **3.1 Instructions de base (à respecter strictement)**
+- **sa, sb, ss :** Échanger deux éléments.
+- **pa, pb :** Pousser un élément entre les piles.
+- **ra, rb, rr :** Faire pivoter les éléments vers le haut.
+- **rra, rrb, rrr :** Faire pivoter les éléments vers le bas.
+
+**Fichiers :** `operations.c`
+
+---
+
+## **4. Implémentation du tri Radix**
+
+### **4.1 Étapes de l'algorithme :**
+1. Identifier le nombre de bits nécessaires pour représenter le plus grand nombre.
+2. Pour chaque bit :
+   - Parcourir la pile A.
+   - Si le bit actuel est `0`, pousser dans la pile B (`pb`).
+   - Sinon, faire une rotation de la pile A (`ra`).
+3. Une fois tous les nombres traités, pousser les éléments de B vers A (`pa`) jusqu'à ce que B soit vide.
+
+**Fichiers :** `radix_sort.c`
+
+---
+
+## **5. Gestion des cas particuliers**
+- **3 éléments :** Implémenter un tri spécifique optimal.
+- **5 éléments :** Utiliser une approche hybride.
+- **Grandes piles :** Utiliser Radix.
+
+**Fichiers :** `small_sort.c`
+
+---
+
+## **6. Performance**
+- Optimiser les appels d'instructions.
+- Respecter les limites d'opérations :
+   - **100 nombres :** ≤ 700 instructions.
+   - **500 nombres :** ≤ 5500 instructions.
+
+**Fichiers :** `performance.c`
+
+---
+
+## **7. Tester le programme**
+- Comparer les résultats avec le programme checker fourni.
+- Créer des jeux de tests automatisés.
+
+**Fichiers :** `tests/`
+
+---
+
+## **8. Makefile**
+- Compiler avec les flags `-Wall -Wextra -Werror`.
+- Règles : `all`, `clean`, `fclean`, `re`, `bonus`.
+
+**Fichiers :** `Makefile`
+
+---
+
+## **9. Partie Bonus (Checker)**
+- Créer un programme `checker` pour vérifier que les instructions triées produisent une pile triée correctement.
+
+**Fichiers :** `checker_bonus.c`
+
+---
+
+## **10. Rendu et Validation**
+- Vérifier le respect des règles de la Norme.
+- Pas de fuites mémoire (utiliser `valgrind` pour vérifier).
+
+---
+
+## ✅ **Plan des fichiers :**
+- `parsing.c`
+- `init_stacks.c`
+- `operations.c`
+- `radix_sort.c`
+- `small_sort.c`
+- `performance.c`
+- `checker_bonus.c`
+- `Makefile`
+
+---
+
+Avec ce plan, tu auras une base solide pour démarrer le projet Push_Swap avec l'algorithme Radix. N'hésite pas à me demander si tu bloques sur une étape ! 🚀
