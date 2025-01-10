@@ -94,10 +94,7 @@ L'objectif est de trier une pile de nombres avec un ensemble limité d'instructi
 
 ---
 
-## **9. Partie Bonus (Checker)**
-- Créer un programme `checker` pour vérifier que les instructions triées produisent une pile triée correctement.
 
-**Fichiers :** `checker_bonus.c`
 
 ---
 
