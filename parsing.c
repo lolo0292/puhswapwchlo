@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lleichtn <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/10 11:45:03 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/01/10 11:45:09 by lleichtn         ###   ########.fr       */
+/*   Updated: 2025/01/10 15:10:12 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@ int	parse_int(const char *str)
 	while (*str)
 	{
 		if (*str < '0' || *str > '9')
-			return (write(2, "Error\n", 6), NULL);
+			return (INT_MAX);
 		result = result * 10 + (*str - '0');
 		if (result * sign < INT_MIN || result * sign > INT_MAX)
-			return (NULL);
+			return (INT_MAX);
 		str++;
 	}
 	return (result * sign);

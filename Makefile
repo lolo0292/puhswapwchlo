@@ -2,23 +2,26 @@ NAME = push_swap.a
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-SRCS = operations.c \
+
+SRC = operation.c \
 	   parsing.c \
 		push_swap.c \
 		radix.c \
+		main.c \
 		stacks.c 
-OBJS = $(SRCS:.c=.o)
+OBJ = $(SRC:.c=.o)
+AR = ar rcs
 
 all: $(NAME)
 
-$(NAME): $(OBJ)
+ $(NAME): $(OBJ)
 	$(AR) $(NAME) $(OBJ)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -f $(OBJS)
+	rm -f $(OBJ)
 
 fclean: clean
 	rm -f $(NAME)
@@ -26,4 +29,3 @@ fclean: clean
 re: fclean all
 
 .PHONY: all clean fclean re bonus
-

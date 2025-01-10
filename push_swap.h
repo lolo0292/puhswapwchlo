@@ -6,7 +6,7 @@
 /*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 16:05:41 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/01/09 13:02:59 by lleichtn         ###   ########.fr       */
+/*   Updated: 2025/01/10 15:13:42 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,5 @@ void    reverse_rotate(int *stack, int size);
 void    rra(int *stack, int size);
 void    rrb(int *stack, int size);
 void    rrr(int *stack_a, int size_a, int *stack_b, int size_b);
-
-// Prototypes de radix.c
-int     get_bit(int num, int pos);
-int     find_max(t_stack *stack);
-int     count_bits(int max);
-void    radix_sort(t_stack **stack_a, t_stack **stack_b);
-
-// Prototypes de push_swap.c
-void sort_three(t_stack *a, t_stack *b);
-void sort_five(t_stack *a, t_stack *b);
-void push_swap(t_stack *a, t_stack *b);
-
 
 #endif

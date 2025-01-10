@@ -6,7 +6,7 @@
 /*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 16:04:50 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/01/07 17:06:59 by lleichtn         ###   ########.fr       */
+/*   Updated: 2025/01/10 15:09:15 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void push(int *dest, int *size_dest, int *src, int *size_src)
    else
     {
         (*size_dest) += 1;//augmente la taile de dest de 1
-        int i = *size_dest - 1;
+        i = *size_dest - 1;
         while (i > 0) //libere dest[0]
         {
             dest[i] = dest[i - 1];

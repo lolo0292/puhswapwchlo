@@ -6,7 +6,7 @@
 /*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 17:32:04 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/01/09 14:48:01 by lleichtn         ###   ########.fr       */
+/*   Updated: 2025/01/10 15:11:07 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int sizeoflist(t_node *list)
 }
 
 // Allouer la mémoire pour les piles a et b
-void stackmem(int **a, int **b, int size)
+void allocate_stacks(int **a, int **b, int size)
 {
     *a = malloc(sizeof(int) * size);
     if (!*a)
@@ -64,9 +64,9 @@ void filllist(int *a, t_node **list)
 // Fonction principale pour initialiser les piles
 void init_stacks(int **a, int *size_a, int **b, int *size_b, t_node **list_a)
 {
-    *size_a = calculate_size(*list_a);
+    *size_a = sizeoflist(*list_a);
     *size_b = 0;
 
     allocate_stacks(a, b, *size_a);
-    fill_and_free_list(*a, list_a);
+    filllist(*a, list_a);
 }
