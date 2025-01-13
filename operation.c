@@ -1,153 +1,114 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   operation.c                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/07 16:04:50 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/01/10 15:09:15 by lleichtn         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
+/* operations.c */
 #include "push_swap.h"
 
-// Échanger deux éléments, swap.c
-void swap (int *stack, int size)
+void swap(t_stack *stack)
 {
-	int tmp;
-	
-	if (size < 2)
-		return;
-	tmp = stack [0];
-	stack[0] = stack[1];
-	stack[1] = tmp;
-}
+    int temp;
 
-void sa(int *a, int size_a)
-{
-	swap(a, size_a);
-	ft_printf("sa\n");
-}
-
-void sb(int *b, int size_b)
-{
-	swap(b, size_b);
-	ft_printf("sb\n");
-}
-
-void ss(int *a, int *b, int size_a, int size_b)
-{
-	swap(a, size_a);
-	swap(b, size_b);
-	ft_printf("ss\n");
-}
-
-
-// Pousser un élément entre les piles, push.c
-void push(int *dest, int *size_dest, int *src, int *size_src)
-{
-	int i; //index qui se balade
-
-	if (!(*size_src)) // si c est nul ca sort car src vide r a copie
-		return;
-   else
-    {
-        (*size_dest) += 1;//augmente la taile de dest de 1
-        i = *size_dest - 1;
-        while (i > 0) //libere dest[0]
-        {
-            dest[i] = dest[i - 1];
-            i--;
-        }
-        dest[0] = src[0]; //remplace dest 0
-        i = 0;
-        while (i < *size_src) //remonte 
-        {
-            src[i] = src[i + 1];
-            i++;
-        }
-        (*size_src) -= 1; //diminue la taille de src de 1 car src est parti ds dest
-    }
-}
-
-void pa(int *a, int *size_a, int *b, int *size_b)
-{
-    push(a, size_a, b, size_b);
-	ft_printf("pa\n");
-}
-
-void pb(int *a, int *size_a, int *b, int *size_b)
-{
-    push(b, size_b, a, size_a);
-	ft_printf("pb\n");
-}
-
-// Faire pivoter les éléments, r.c
-void rotate(int *stack, int size)
-{
-    if (size < 2)
+    if (stack->size < 2)
         return;
-    int tmp = stack[0];
-    int i = 0;
-    while (i < size - 1)
-    {
-        stack[i] = stack[i + 1];
-        i++;
-    }
-    stack[size - 1] = tmp;
+    temp = stack->array[0];
+    stack->array[0] = stack->array[1];
+    stack->array[1] = temp;
 }
 
-void ra(int *stack, int size)
+void push(t_stack *src, t_stack *dest)
 {
-    rotate(stack, size);
-	printf("ra\n");
-}
+    int i;
 
-void rb(int *stack, int size)
-{
-    rotate(stack, size);
-	printf("rb\n");
-}
-
-void rr(int *a, int size_a, int *b, int size_b)
-{
-    rotate(a, size_a);
-    rotate(b, size_b);
-	printf("rr\n");
-}
-
-// reverse pivotage, rr.c
-void reverse_rotate(int *stack, int size)
-{
-    if (size < 2)
+    if (src->size == 0)
         return;
-    int tmp = stack[size - 1];
-    int i = size - 1;
+    i = dest->size;
     while (i > 0)
     {
-        stack[i] = stack[i - 1];
+        dest->array[i] = dest->array[i - 1];
         i--;
     }
-    stack[0] = tmp;
+    dest->array[0] = src->array[0];
+    i = 0;
+    while (i < src->size - 1)
+    {
+        src->array[i] = src->array[i + 1];
+        i++;
+    }
+    src->size--;
+    dest->size++;
 }
 
-void rra(int *stack, int size)
+void rotate(t_stack *stack)
 {
-    reverse_rotate(stack, size);
-	printf("rra\n");
+    int temp;
+    int i;
+
+    if (stack->size < 2)
+        return;
+    temp = stack->array[0];
+    i = 0;
+    while (i < stack->size - 1)
+    {
+        stack->array[i] = stack->array[i + 1];
+        i++;
+    }
+    stack->array[stack->size - 1] = temp;
 }
 
-void rrb(int *stack, int size)
+void reverse_rotate(t_stack *stack)
 {
-    reverse_rotate(stack, size);
-	printf("rrb\n");
+    int temp;
+    int i;
+
+    if (stack->size < 2)
+        return;
+    temp = stack->array[stack->size - 1];
+    i = stack->size - 1;
+    while (i > 0)
+    {
+        stack->array[i] = stack->array[i - 1];
+        i--;
+    }
+    stack->array[0] = temp;
 }
 
-void rrr(int *a, int size_a, int *b, int size_b)
+void sa(t_stack *a) 
+{ 
+	swap(a); 
+}
+void sb(t_stack *b) 
+{ 
+	swap(b); 
+}
+void ss(t_stack *a, t_stack *b)
 {
-    reverse_rotate(a, size_a);
-    reverse_rotate(b, size_b);
-	printf("rrr\n");
+    swap(a);
+    swap(b);
 }
 
+void pa(t_stack *a, t_stack *b) 
+{ push(b, a); 
+}
+void pb(t_stack *a, t_stack *b) 
+{ push(a, b); 
+}
+
+void ra(t_stack *a) 
+{ 
+	rotate(a); 
+}
+void rb(t_stack *b) 
+{ rotate(b); 
+}
+void rr(t_stack *a, t_stack *b)
+{
+    rotate(a);
+    rotate(b);
+}
+
+void rra(t_stack *a) 
+{ reverse_rotate(a); }
+void rrb(t_stack *b) 
+{ reverse_rotate(b); }
+void rrr(t_stack *a, t_stack *b)
+{
+    reverse_rotate(a);
+    reverse_rotate(b);
+}

@@ -1,4 +1,4 @@
-NAME = push_swap.a
+NAME = push_swap
 
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
@@ -6,9 +6,7 @@ CFLAGS = -Wall -Wextra -Werror
 SRC = operation.c \
 	   parsing.c \
 		push_swap.c \
-		radix.c \
-		main.c \
-		stacks.c 
+		sort.c 
 OBJ = $(SRC:.c=.o)
 AR = ar rcs
 

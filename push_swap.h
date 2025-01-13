@@ -6,7 +6,7 @@
 /*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 16:05:41 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/01/10 15:13:42 by lleichtn         ###   ########.fr       */
+/*   Updated: 2025/01/13 15:45:04 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,49 +21,56 @@
 #include <strings.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include "../printf/ft_printf.h"
 
-typedef struct s_node
-{
-    int value;
-    struct s_node *next;
-} t_node;
 
 typedef struct s_stack
 {
     int *array;
     int size;
-    struct s_stack *next;
 } t_stack;
 
-// Prototypes de stacks.c
-int     sizeoflist(t_node *list);
-void    stackmem(int **a, int **b, int size);
-void    filllist(int *a, t_node **list);
-void    init_stacks(int **a, int *size_a, int **b, int *size_b, t_node **list_a);
+
+// Sorting algorithms
+void sort_small(t_stack *a, t_stack *b);
+void radix_sort(t_stack *a, t_stack *b);
+// void sort(int argc, char **argv);
+
+// Utility functions
+void error_exit(void);
+int is_sorted(t_stack *stack);
+t_stack init_stack(int size);
+void free_stack(t_stack *stack);
+
 
 // Prototypes de parsing.c
-int     parse_int(const char *str);
-int     has_duplicates(int *array, int size);
-int     count_tokens(const char *buffer);
-int     parse_tokens(int *numbers, char *buffer, int *size);
-int     *parse_file(const char *filename, int *size);
+#include "push_swap.h"
+int parse_int(const char *str, int *error);
+int has_duplicates(int *array, int size, int value);
+int parse_arguments(int argc, char **argv, int *array, int *size);
+
+// int parse_int(const char *str, int *is_error);
+// int has_duplicates(int *array, int size);
+// int count_tokens(const char *buffer);
+// int parse_tokens(int *numbers, char *buffer, int *size);
+// int *parse_file(const char *filename, int *size);
 
 // Prototypes d'operation.c
-void    swap(int *stack, int size);
-void    sa(int *a, int size_a);
-void    sb(int *b, int size_b);
-void    ss(int *a, int *b, int size_a, int size_b);
-void    push(int *dest, int *size_dest, int *src, int *size_src);
-void    pa(int *stack_a, int *size_a, int *stack_b, int *size_b);
-void    pb(int *stack_a, int *size_a, int *stack_b, int *size_b);
-void    rotate(int *stack, int size);
-void    ra(int *stack, int size);
-void    rb(int *stack, int size);
-void    rr(int *stack_a, int size_a, int *stack_b, int size_b);
-void    reverse_rotate(int *stack, int size);
-void    rra(int *stack, int size);
-void    rrb(int *stack, int size);
-void    rrr(int *stack_a, int size_a, int *stack_b, int size_b);
+void swap(t_stack *stack);
+void push(t_stack *src, t_stack *dest);
+void rotate(t_stack *stack);
+void reverse_rotate(t_stack *stack);
+void sa(t_stack *a);
+void sb(t_stack *b);
+void ss(t_stack *a, t_stack *b);
+void pa(t_stack *a, t_stack *b);
+void pb(t_stack *a, t_stack *b);
+void rra(t_stack *a);
+void rrb(t_stack *b);
+void rrr(t_stack *a, t_stack *b);
+void ra(t_stack *a);
+void rb(t_stack *b);
+void rr(t_stack *a, t_stack *b);
+
+int count_steps(t_stack *a, t_stack *b);
 
 #endif

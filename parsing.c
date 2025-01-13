@@ -1,132 +1,87 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/10 11:45:03 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/01/10 15:10:12 by lleichtn         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "push_swap.h"
 
-int	parse_int(const char *str)
+ int parse_int(const char *str, int *error)
 {
-	long	result;
-	int		sign;
+    int num;
+    int sign;
 
-	result = 0;
-	sign = 1;
-	if (*str == '-' || *str == '+')
-	{
-		if (*str == '-')
-			sign = -1;
-		str++;
-	}
-	while (*str)
-	{
-		if (*str < '0' || *str > '9')
-			return (INT_MAX);
-		result = result * 10 + (*str - '0');
-		if (result * sign < INT_MIN || result * sign > INT_MAX)
-			return (INT_MAX);
-		str++;
-	}
-	return (result * sign);
+    num = 0;
+    sign = 1;
+    *error = 0;
+    if (*str == '-')
+    {
+        sign = -1;
+        str++;
+    }
+    else if (*str == '+')
+    {
+        str++;
+    }
+    while (*str)
+    {
+        if (*str < '0' || *str > '9')
+        {
+            *error = 1;
+            return (0);
+        }
+        num = num * 10 + (*str - '0');
+        if ((sign == 1 && num > INT_MAX) || (sign == -1 && -num < INT_MIN))
+        {
+            *error = 1;
+            return (0);
+        }
+        str++;
+    }
+    return (num * sign);
 }
 
-int	has_duplicates(int *array, int size)
+ int has_duplicates(int *array, int size, int value)
 {
-	int	i;
-	int	j;
+    int i;
 
-	i = 0;
-	while (i < size)
-	{
-		j = i + 1;
-		while (j < size)
-		{
-			if (array[i] == array[j])
-				return (1);
-			j++;
-		}
-		i++;
-	}
-	return (0);
+    i = 0;
+    while (i < size)
+    {
+        if (array[i] == value)
+        {
+            return (1);
+        }
+        i++;
+    }
+    return (0);
 }
 
-int	count_tokens(const char *buffer)
+int parse_arguments(int argc, char **argv, int *array, int *size)
 {
-	int	count;
-	int	in_token;
+    int i;
+    int error;
+    int value;
 
-	count = 0;
-	in_token = 0;
-	while (*buffer)
-	{
-		if (*buffer == ' ' || *buffer == '\n')
-			in_token = 0;
-		else if (!in_token)
-		{
-			in_token = 1;
-			count++;
-		}
-		buffer++;
-	}
-	return (count);
-}
-
-int	parse_tokens(int *numbers, char *buffer, int *size)
-{
-	char	*token;
-	char	*end;
-	int		num;
-
-	token = buffer;
-	*size = 0;
-	while (*token)
-	{
-		while (*token == ' ' || *token == '\n')
-			token++;
-		if (!*token)
-			break ;
-		end = token;
-		while (*end && *end != ' ' && *end != '\n')
-			end++;
-		*end = '\0';
-		num = parse_int(token);
-		if (num == INT_MAX)
-			return (0);
-		numbers[*size] = num;
-		(*size)++;
-		token = end + 1;
-	}
-	return (1);
-}
-
-int	*parse_file(const char *filename, int *size)
-{
-	int		fd;
-	int		bytes_read;
-	int		token_count;
-	char	buffer[4096];
-	int		*numbers;
-
-	fd = open(filename, O_RDONLY);
-	if (fd < 0)
-		return (write(2, "Error\n", 6), NULL);
-	bytes_read = read(fd, buffer, sizeof(buffer) - 1);
-	close(fd);
-	if (bytes_read <= 0)
-		return (write(2, "Error\n", 6), NULL);
-	buffer[bytes_read] = '\0';
-	token_count = count_tokens(buffer);
-	numbers = malloc(token_count * sizeof(int));
-	if (!numbers)
-		return (write(2, "Error\n", 6), NULL);
-	if (!parse_tokens(numbers, buffer, size) || has_duplicates(numbers, *size))
-		return (free(numbers), write(2, "Error\n", 6), NULL);
-	return (numbers);
+    if (argc < 2)
+    {
+        return (write(2, "Error2\n", 10), 0);
+    }
+    *size = 0;
+    i = 1;
+    while (i < argc)
+    {
+        if (!argv[i] || !*argv[i])
+        {
+            return (write(2, "Error\n", 10), 0);
+        }
+        error = 0;
+        value = parse_int(argv[i], &error);
+        if (error || has_duplicates(array, *size, value))
+        {
+            return (write(2, "Error\n", 6), 0);
+        }
+        array[*size] = value;
+        (*size)++;
+        i++;
+    }
+    if (*size == 0)
+    {
+        return (write(2, "Error\n", 10), 0);
+    }
+    return (1);
 }
