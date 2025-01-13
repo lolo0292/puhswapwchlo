@@ -6,7 +6,7 @@
 /*   By: lleichtn <lleichtn@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/07 16:31:40 by lleichtn          #+#    #+#             */
-/*   Updated: 2025/01/13 15:39:03 by lleichtn         ###   ########.fr       */
+/*   Updated: 2025/01/13 18:34:53 by lleichtn         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,9 +171,10 @@ int main(int argc, char **argv)
     }
 
     push_swap(&a, &b);
+    write(1, "\n", 10);
     print_stack(&a);
     int steps = count_steps(&a, &b);
-    ft_printf("\nTotal steps: %d\n", steps);
+    printf("\nTotal steps: %d\n", steps);
 
     free_stack(&a);
     free_stack(&b);

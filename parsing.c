@@ -71,8 +71,7 @@ int parse_arguments(int argc, char **argv, int *array, int *size)
         }
         error = 0;
         value = parse_int(argv[i], &error);
-        if (error || has_duplicates(array, *size, value))
-        {
+        if (error || value < INT_MIN || value > INT_MAX || has_duplicates(array, *size, (int)value))        {
             return (write(2, "Error\n", 6), 0);
         }
         array[*size] = value;
