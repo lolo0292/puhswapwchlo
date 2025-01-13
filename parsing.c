@@ -2,7 +2,7 @@
 
  int parse_int(const char *str, int *error)
 {
-    int num;
+    long num;
     int sign;
 
     num = 0;
@@ -25,12 +25,12 @@
             return (0);
         }
         num = num * 10 + (*str - '0');
-        if ((sign == 1 && num > INT_MAX) || (sign == -1 && -num < INT_MIN))
-        {
-            *error = 1;
-            return (0);
-        }
         str++;
+    }
+    if ((sign == 1 && num > INT_MAX) || (sign == -1 && -num < INT_MIN))
+    {
+    *error = 1;
+    return (0);
     }
     return (num * sign);
 }
@@ -51,11 +51,47 @@
     return (0);
 }
 
+// int parse_arguments(int argc, char **argv, int *array, int *size)
+// {
+//     int i;
+//     int error;
+//     int value;
+
+//     if (argc < 2)
+//     {
+//         return (write(2, "Error2\n", 10), 0);
+//     }
+//     *size = 0;
+//     i = 1;
+//     while (i < argc)
+//     {
+//         if (!argv[i] || !*argv[i])
+//         {
+//             return (write(2, "Error\n", 10), 0);
+//         }
+//         error = 0;
+//         value = parse_int(argv[i], &error);
+//         if (error || value < INT_MIN || value > INT_MAX || has_duplicates(array, *size, (int)value))
+//         {
+//             write(2, "Error2\n", 10);
+//             exit(EXIT_FAILURE);
+//         }
+//         array[*size] = value;
+//         (*size)++;
+//         i++;
+//     }
+//     if (*size == 0)
+//     {
+//         return (write(2, "Error\n", 10), 0);
+//     }
+//     return (1);
+// }
+
 int parse_arguments(int argc, char **argv, int *array, int *size)
 {
     int i;
     int error;
-    int value;
+    long value;
 
     if (argc < 2)
     {
@@ -67,14 +103,17 @@ int parse_arguments(int argc, char **argv, int *array, int *size)
     {
         if (!argv[i] || !*argv[i])
         {
-            return (write(2, "Error\n", 10), 0);
+            write(2, "Error1\n", 10);
+            exit(EXIT_FAILURE);
         }
         error = 0;
         value = parse_int(argv[i], &error);
-        if (error || value < INT_MIN || value > INT_MAX || has_duplicates(array, *size, (int)value))        {
-            return (write(2, "Error\n", 6), 0);
+        if (error || value < INT_MIN || value > INT_MAX || has_duplicates(array, *size, (int)value))
+        {
+            write(2, "Error2\n", 10);
+            exit(EXIT_FAILURE);
         }
-        array[*size] = value;
+        array[*size] = (int)value;
         (*size)++;
         i++;
     }
